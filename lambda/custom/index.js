@@ -1,34 +1,59 @@
 const Alexa = require('ask-sdk-core');
 
+const REPROMPT_TEXT = 'This is the reprompt text';
+
 const LaunchRequestHandler = {
   canHandle(handlerInput) {
     return handlerInput.requestEnvelope.request.type === 'LaunchRequest';
   },
   handle(handlerInput) {
-    const speechText = "Welcome to the Alexa Skills Kit, you can say anything and I'll respond with Hello World... because why not?";
+    const speechText = 'Welcome to Hello World Builder. This is a skill devised to train new concepts to Jared. For now just simply ask me to "Say a phrase", for example you can say; "Say the phrase, I love bacon"';
 
     return handlerInput.responseBuilder
       .speak(speechText)
-      .reprompt(speechText)
-      .withSimpleCard('Hello World', speechText)
+      .reprompt(REPROMPT_TEXT)
       .getResponse();
   },
 };
 
-const HelloWorldIntentHandler = {
+const SpeakPhraseIntentHandler = {
   canHandle(handlerInput) {
+    const { request } = handlerInput.requestEnvelope;
+    // const allSlots = request.intent.slots;
+
     return (
       handlerInput.requestEnvelope.request.type === 'IntentRequest'
-      && handlerInput.requestEnvelope.request.intent.name === 'HelloWorldIntent'
+      && handlerInput.requestEnvelope.request.intent.name === 'SpeakPhraseIntent'
     );
   },
   handle(handlerInput) {
-    const speechText = 'Hello World!';
+    const attributes = handlerInput.attributesManager.getSessionAttributes();
+    const phrase = handlerInput.requestEnvelope.request.intent.slots.phrase.value;
+    const speechText = 'placeholder text';
 
-    return handlerInput.responseBuilder
-      .speak(speechText)
-      .withSimpleCard('Hello World', speechText)
-      .getResponse();
+    // const speechText = `Hello I am Alexa and my favorite phrase is ${allSlots.phrase.value}`;
+
+    // console.dir(allSlots.phrase.value, {
+    //   depth: null,
+    //   colors: true,
+    // });
+
+    console.dir(attributes, {
+      depth: null,
+      colors: true,
+    });
+
+    console.dir(phrase, {
+      depth: null,
+      colors: true,
+    });
+
+    return (
+      handlerInput.responseBuilder
+        .speak(speechText)
+        // .withSimpleCard(`I said the phrase ${allSlots.phrase.value}`)
+        .getResponse()
+    );
   },
 };
 
@@ -98,7 +123,7 @@ const skillBuilder = Alexa.SkillBuilders.custom();
 exports.handler = skillBuilder
   .addRequestHandlers(
     LaunchRequestHandler,
-    HelloWorldIntentHandler,
+    SpeakPhraseIntentHandler,
     HelpIntentHandler,
     CancelAndStopIntentHandler,
     SessionEndedRequestHandler,

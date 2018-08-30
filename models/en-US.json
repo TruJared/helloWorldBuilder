@@ -16,10 +16,22 @@
           "samples": []
         },
         {
-          "name": "HelloWorldIntent",
-          "samples": ["hello"]
+          "name": "SpeakPhraseIntent",
+          "slots": [
+            {
+              "name": "phrase",
+              "type": "AMAZON.SearchQuery"
+            }
+          ],
+          "samples": [
+            "Say the phrase {phrase}",
+            "Speak {phrase}",
+            "Say {phrase}",
+            "Speak the phrase {phrase}"
+          ]
         }
-      ]
+      ],
+      "types": []
     }
   }
 }

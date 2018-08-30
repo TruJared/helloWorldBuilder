@@ -1,5 +1,5 @@
-LaunchRequest
-HelloWorldIntent
+# LaunchRequest
+? SpeakPhraseIntent phrase=Bacon_is_the_best
 # AMAZON.HelpIntent
 # AMAZON.CancelIntent
 # AMAZON.StopIntent
