@@ -19,19 +19,13 @@ const LaunchRequestHandler = {
 const SpeakPhraseIntentHandler = {
   canHandle(handlerInput) {
     const { request } = handlerInput.requestEnvelope;
-    // const allSlots = request.intent.slots;
 
-    return (
-      handlerInput.requestEnvelope.request.type === 'IntentRequest'
-      && handlerInput.requestEnvelope.request.intent.name === 'SpeakPhraseIntent'
-    );
+    return request.type === 'IntentRequest' && request.intent.name === 'SpeakPhraseIntent';
   },
   handle(handlerInput) {
     const attributes = handlerInput.attributesManager.getSessionAttributes();
     const phrase = handlerInput.requestEnvelope.request.intent.slots.phrase.value;
-    const speechText = 'placeholder text';
-
-    // const speechText = `Hello I am Alexa and my favorite phrase is ${allSlots.phrase.value}`;
+    const speechText = 'Hello my name is Alexa and my favorite phrase is';
 
     // console.dir(allSlots.phrase.value, {
     //   depth: null,
@@ -48,12 +42,13 @@ const SpeakPhraseIntentHandler = {
       colors: true,
     });
 
-    return (
-      handlerInput.responseBuilder
-        .speak(speechText)
-        // .withSimpleCard(`I said the phrase ${allSlots.phrase.value}`)
-        .getResponse()
-    );
+    return handlerInput.responseBuilder
+      .speak(
+        `${speechText} ${phrase}, if you would like to try another just tell me to say another phrase, you can try saying, Say I love eggs too. Or else say exit to quit.`,
+      )
+      .withSimpleCard(`I said the phrase ${phrase}`)
+      .reprompt(REPROMPT_TEXT)
+      .getResponse();
   },
 };
 
@@ -65,12 +60,11 @@ const HelpIntentHandler = {
     );
   },
   handle(handlerInput) {
-    const speechText = 'You can say hello to me!';
+    const speechText = 'lorem ipsum';
 
     return handlerInput.responseBuilder
       .speak(speechText)
       .reprompt(speechText)
-      .withSimpleCard('Hello World', speechText)
       .getResponse();
   },
 };
@@ -88,7 +82,7 @@ const CancelAndStopIntentHandler = {
 
     return handlerInput.responseBuilder
       .speak(speechText)
-      .withSimpleCard('Hello World', speechText)
+      .withSimpleCard('thanks for playing')
       .getResponse();
   },
 };
@@ -112,8 +106,12 @@ const ErrorHandler = {
     console.log(`Error handled: ${error.message}`);
 
     return handlerInput.responseBuilder
-      .speak("Sorry, I can't understand the command. Please say again.")
-      .reprompt("Sorry, I can't understand the command. Please say again.")
+      .speak(
+        '<say-as interpret-as="interjection">Great scott</say-as>, something has gone <say-as interpret-as="expletive">terribly</say-as> wrong, please repeat what you just said.',
+      )
+      .reprompt(
+        '<say-as interpret-as="interjection">Great scott</say-as>, something has gone <say-as interpret-as="expletive">terribly</say-as> wrong, please repeat what you just said.',
+      )
       .getResponse();
   },
 };
