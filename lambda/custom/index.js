@@ -87,6 +87,25 @@ const CancelAndStopIntentHandler = {
   },
 };
 
+const FallbackHandlerRequest = {
+  canHandle(handlerInput) {
+    return (
+      handlerInput.requestEnvelope.request.type === 'IntentRequest'
+      && handlerInput.requestEnvelope.request.intent.name === 'AMAZON.FallbackIntent'
+    );
+  },
+  handle(handlerInput) {
+    return handlerInput.responseBuilder
+      .speak(
+        '<say-as interpret-as="interjection">Great scott</say-as>, something has gone <say-as interpret-as="expletive">terribly</say-as> wrong, please don\'t repeat what you just said.',
+      )
+      .reprompt(
+        '<say-as interpret-as="interjection">Great scott</say-as>, something has gone <say-as interpret-as="expletive">terribly</say-as> wrong, please don\'t  repeat what you just said.',
+      )
+      .getResponse();
+  },
+};
+
 const SessionEndedRequestHandler = {
   canHandle(handlerInput) {
     return handlerInput.requestEnvelope.request.type === 'SessionEndedRequest';
@@ -125,6 +144,7 @@ exports.handler = skillBuilder
     HelpIntentHandler,
     CancelAndStopIntentHandler,
     SessionEndedRequestHandler,
+    FallbackHandlerRequest,
   )
   .addErrorHandlers(ErrorHandler)
   .lambda();

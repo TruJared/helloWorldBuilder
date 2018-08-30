@@ -16,6 +16,10 @@
           "samples": []
         },
         {
+          "name": "AMAZON.FallbackIntent",
+          "samples": []
+        },
+        {
           "name": "SpeakPhraseIntent",
           "slots": [
             {
