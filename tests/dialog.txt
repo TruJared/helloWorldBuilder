@@ -1,0 +1,8 @@
+LaunchRequest
+HelloWorldIntent
+# AMAZON.HelpIntent
+# AMAZON.CancelIntent
+# AMAZON.StopIntent
+# AMAZON.YesIntent
+# AMAZON.NoIntent
+# AMAZON.RepeatIntent
