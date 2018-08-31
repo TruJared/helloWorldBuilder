@@ -47,7 +47,7 @@ const SpeakPhraseIntentHandler = {
 
     return handlerInput.responseBuilder
       .speak(
-        `${speechText} ${phrase}, if you would like to hear another try saying, for example, Say I love eggs too. Or else say exit to quit.`,
+        `${speechText} ${phrase}, if you would like to hear another try saying for example, Say I love eggs too. Or else say stop to quit.`,
       )
       .withSimpleCard(`I said the phrase ${phrase}`)
       .reprompt(REPROMPT_TEXT)
