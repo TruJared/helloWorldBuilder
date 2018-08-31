@@ -1,9 +1,11 @@
 # LaunchRequest
 ? SpeakPhraseIntent phrase=Bacon_is_the_best
+? SpeakPhraseIntent phrase=Bacon_is_the_worst
+? SpeakPhraseIntent phrase=unicorn
 AMAZON.StopIntent
-AMAZON.FallbackIntent
+# AMAZON.FallbackIntent
 # fakeIntent cause a throw error
-fakeIntent
+# fakeIntent
 # AMAZON.HelpIntent
 # AMAZON.CancelIntent
 # AMAZON.YesIntent

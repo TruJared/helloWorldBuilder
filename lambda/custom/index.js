@@ -1,4 +1,5 @@
 const Alexa = require('ask-sdk-core');
+const Helpers = require('./helpers');
 
 const REPROMPT_TEXT = 'This is the reprompt text';
 
@@ -18,14 +19,16 @@ const LaunchRequestHandler = {
 
 const SpeakPhraseIntentHandler = {
   canHandle(handlerInput) {
-    const { request } = handlerInput.requestEnvelope;
-
-    return request.type === 'IntentRequest' && request.intent.name === 'SpeakPhraseIntent';
+    return (
+      handlerInput.requestEnvelope.request.type === 'IntentRequest'
+      && handlerInput.requestEnvelope.request.intent.name === 'SpeakPhraseIntent'
+    );
   },
   handle(handlerInput) {
+    const speechText = 'Hello my name is Alexa and my favorite phrase is';
     const attributes = handlerInput.attributesManager.getSessionAttributes();
     const phrase = handlerInput.requestEnvelope.request.intent.slots.phrase.value;
-    const speechText = 'Hello my name is Alexa and my favorite phrase is';
+    const sessionData = Helpers.getSessionData(handlerInput);
 
     // console.dir(allSlots.phrase.value, {
     //   depth: null,
@@ -44,7 +47,7 @@ const SpeakPhraseIntentHandler = {
 
     return handlerInput.responseBuilder
       .speak(
-        `${speechText} ${phrase}, if you would like to try another just tell me to say another phrase, you can try saying, Say I love eggs too. Or else say exit to quit.`,
+        `${speechText} ${phrase}, if you would like to hear another try saying, for example, Say I love eggs too. Or else say exit to quit.`,
       )
       .withSimpleCard(`I said the phrase ${phrase}`)
       .reprompt(REPROMPT_TEXT)
@@ -79,10 +82,12 @@ const CancelAndStopIntentHandler = {
   },
   handle(handlerInput) {
     const speechText = 'Goodbye!';
+    const attributes = handlerInput.attributesManager.getSessionAttributes();
+    const timesPlayed = attributes.counter;
 
     return handlerInput.responseBuilder
       .speak(speechText)
-      .withSimpleCard('thanks for playing')
+      .withSimpleCard('thanks for playing', `You created ${timesPlayed} phrases`)
       .getResponse();
   },
 };
